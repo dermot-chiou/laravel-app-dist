@@ -29,28 +29,32 @@
                 var that = this;
                 this.app.files.map(function(v, k)
                 {
-                    url[v.os] = {};
+                    if(!url[v.os])
+                        url[v.os] = {};
                     url[v.os][v.device] = v.url;
+
                     if(!that.osList.includes(v.os))
                         that.osList.push(v.os);
                 });
+
+
                 var link = null;
                 if (this.$md.is('AndroidOS') && url.Android) {
                     if (this.$md.phone()) {
-                        link = url.Android.mobile || url.Android.tablet;
+                        link = url.Android.phone || url.Android.tablet;
                     }
 
                     if (this.$md.tablet()) {
-                        link = url.Android.tablet || url.Android.mobile;
+                        link = url.Android.phone || url.Android.mobile;
                     }
                 }
                 else if (this.$md.is('iOS') && url.iOS) {
                     if (this.$md.phone()) {
-                        link = url.iOS.mobile || url.iOS.tablet;
+                        link = url.iOS.phone || url.iOS.tablet;
                     }
 
                     if (this.$md.tablet()) {
-                        link = url.iOS.tablet || url.iOS.mobile;
+                        link = url.iOS.phone || url.iOS.mobile;
                     }
                 }
                 if(link)
