@@ -18,5 +18,12 @@ Route::get('/', function () {
 Route::get('apps', 'AppController@index');
 Route::get('apps/{appId}', 'AppController@show');
 
-Route::get('/admin', 'Admin\IndexController@index');
-Route::put('/admin', 'Admin\IndexController@store');
+Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
+    Route::get('/', 'IndexController@index');
+    Route::get('/app', 'AppController@index');
+    Route::get('/app/create', 'AppController@create');
+    Route::post('/app/create', 'AppController@store');
+    Route::get('/app/{appId}', 'AppController@show');
+    Route::delete('/app/{appId}/{file?}', 'AppController@destroy');
+});
+
