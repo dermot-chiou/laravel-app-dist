@@ -6,14 +6,20 @@
             <span v-for="os in osList" class="label label-success">{{os}}</span> &nbsp;
         </p>
         <img class="qrcode img-thumbnail" :src="this.$qrcode()" alt="">
+        <vue-markdown :source="app.description"></vue-markdown>
     </div>
 </template>
 <style>
     .label{
         margin: 0 2px;
     }
+
+    th{
+        text-align: center;
+    }
 </style>
 <script>
+    import VueMarkdown from 'vue-markdown'
     export default {
         data() {
             return {
@@ -21,7 +27,10 @@
                 name :''
               },
               osList: [],
-            }},
+        }},
+        components: {
+            VueMarkdown
+        },
         mounted() {
             this.$http.get('/apps/' + this.$route.params.appId).then(response => {
                 this.app = response.body;

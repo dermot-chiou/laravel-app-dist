@@ -63,12 +63,21 @@ class AppController extends Controller
 
     public function edit($appId)
     {
-
+        $app = MobileApp::where('app_id', $appId)->first();
+        if (!$app)
+            abort(404);
+        return view('admin.app.edit', compact('app'));
     }
 
     public function update($appId, Request $request)
     {
+        $app = MobileApp::where('app_id', $appId)->first();
+        if (!$app)
+            abort(404);
 
+        $app->description = $request->description;
+        $app->save();
+        return redirect()->action('Admin\AppController@edit', [$appId]);
     }
 
     public function destroy($appId, $file = null)

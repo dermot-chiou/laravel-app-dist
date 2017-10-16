@@ -23,4 +23,5 @@
     <input type="hidden" name="_method" value="DELETE">
     <input type="submit" value="刪除全部" class="btn btn-danger">
 </form>
+<a href="{{action('Admin\AppController@edit', [$app->app_id])}}" class="btn btn-success">編輯</a>
 @endsection

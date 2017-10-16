@@ -22,6 +22,8 @@ Route::get('apps/{appId}/{filename}.plist', 'PlistController@getPlist');
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/', 'IndexController@index');
     Route::get('/app', 'AppController@index');
+    Route::get('/app/{appId}/edit', 'AppController@edit');
+    Route::put('/app/{appId}/edit', 'AppController@update');
     Route::get('/app/create', 'AppController@create');
     Route::post('/app/create', 'AppController@store');
     Route::get('/app/{appId}', 'AppController@show');

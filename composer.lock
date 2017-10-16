@@ -4,8 +4,62 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "df73767d54edb70b9d0084ce967c5b73",
+    "content-hash": "06f3f8802cd90946e46f140f1995d682",
     "packages": [
+        {
+            "name": "andreasindal/laravel-markdown",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andreasindal/laravel-markdown.git",
+                "reference": "e5d2dd0ac8b9be7428060110024824c33ab88c56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andreasindal/laravel-markdown/zipball/e5d2dd0ac8b9be7428060110024824c33ab88c56",
+                "reference": "e5d2dd0ac8b9be7428060110024824c33ab88c56",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown": "^1.6",
+                "illuminate/support": "^5.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9.9",
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Indal\\Markdown\\MarkdownServiceProvider"
+                    ],
+                    "aliases": {
+                        "Markdown": "Indal\\Markdown\\Facade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Indal\\Markdown\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andreas Indal",
+                    "email": "andreas@rocketship.se"
+                }
+            ],
+            "description": "Simple Blade directive for markdown parsing.",
+            "time": "2017-08-30T19:46:01+00:00"
+        },
         {
             "name": "composer/ca-bundle",
             "version": "1.0.8",
@@ -2698,103 +2752,6 @@
                 "instantiate"
             ],
             "time": "2015-06-14T21:17:01+00:00"
-        },
-        {
-            "name": "fgreinus/antonioribeiro-firewall",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fgreinus/antonioribeiro-firewall.git",
-                "reference": "c80e2599c74da73fb144120e3c8e4a1aac39f09b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fgreinus/antonioribeiro-firewall/zipball/c80e2599c74da73fb144120e3c8e4a1aac39f09b",
-                "reference": "c80e2599c74da73fb144120e3c8e4a1aac39f09b",
-                "shasum": ""
-            },
-            "require": {
-                "fgreinus/antonioribeiro-support": "^0.7",
-                "illuminate/cache": "~4|~5",
-                "illuminate/filesystem": "~4|~5",
-                "illuminate/support": "~4|~5",
-                "php": ">=5.3.7"
-            },
-            "suggest": {
-                "geoip/geoip": "~1.14",
-                "geoip2/geoip2": "~2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PragmaRX\\Firewall\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Antonio Carlos Ribeiro",
-                    "email": "acr@antoniocarlosribeiro.com",
-                    "role": "Creator"
-                }
-            ],
-            "description": "A Laravel 4.1+ IP whitelisting and blacklisting",
-            "keywords": [
-                "blacklist",
-                "firewall",
-                "laravel",
-                "whitelist"
-            ],
-            "time": "2017-02-13T14:50:38+00:00"
-        },
-        {
-            "name": "fgreinus/antonioribeiro-support",
-            "version": "v0.7.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/fgreinus/antonioribeiro-support.git",
-                "reference": "283169e3c735ab73dec0b10d3a917df2bc2461e7"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/fgreinus/antonioribeiro-support/zipball/283169e3c735ab73dec0b10d3a917df2bc2461e7",
-                "reference": "283169e3c735ab73dec0b10d3a917df2bc2461e7",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/filesystem": "~4.0|~5.0",
-                "php": ">=5.4.0",
-                "symfony/var-dumper": "~2.6|~3.0"
-            },
-            "suggest": {
-                "laravel/framework": "Laravel framework."
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PragmaRX\\Support\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Antonio Carlos Ribeiro",
-                    "email": "acr@antoniocarlosribeiro.com",
-                    "role": "Creator"
-                }
-            ],
-            "description": "PragmaRX components support package",
-            "keywords": [
-                "laravel",
-                "pragmarx"
-            ],
-            "time": "2017-02-13T14:49:25+00:00"
         },
         {
             "name": "filp/whoops",
