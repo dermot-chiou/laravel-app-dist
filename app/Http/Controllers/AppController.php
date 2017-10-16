@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MobileApp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -9,46 +10,42 @@ class AppController extends Controller
 {
     public function index()
     {
-    	$resp = [];
-    	$disk = Storage::disk('public');
-    	$directories = $disk->directories('apps');
-    	foreach ($directories as $dir) 
-    	{
-    		$data = [];
-    		$files = $disk->files($dir);
-    		foreach ($files as $file) 
-    		{
-    			$basename = basename($file);
-    			if ($basename == 'manifest.json') {
-    				$data = json_decode($disk->get($file), true);
-    				break;
-    			}
-    		}
-    		$resp[] = $data;
-    	}
-
-    	return $resp;
+        $apps = MobileApp::all();
+        return $apps;
     }
 
     public function show($appId)
     {
-    	
-    	$disk = Storage::disk('public');
-    	$files = $disk->files('apps/'.$appId);
-    	$resp['info'] = json_decode($disk->get('apps/'.$appId.'/manifest.json'), true);
-    	foreach ($files as $file) 
+        $app = MobileApp::where('app_id', $appId)->first();
+        $app->load('files');
+    	foreach ($app->files as $file)
     	{
-    		$pathinfo = pathinfo($file);
+    		$pathinfo = pathinfo($file->file_name);
     		$extension = $pathinfo['extension'];
     		if (method_exists($this, $extension)) {
-    			$data = $this->{$extension}($file, $disk);
-    			$resp['urls'][$data['os']][$data['device']] = $data;
+    			$data = $this->{$extension}($appId, 'apps/'.$app->app_id.'/'.$file->file_name, Storage::disk('public'));
+    			//$resp['urls'][$data['os']][$data['device']] = $data;
+                $file->os = $data['os'];
+                $file->device = $data['device'];
+                $file->url = $data['url'];
     		}
     	}
-    	return $resp;
+        //dd($app);
+    	return $app;
     }
 
-    private function plist($file, $disk)
+    private function ipa($appId, $file, $disk)
+    {
+        $pathinfo = pathinfo($file);
+        $extension = $pathinfo['extension'];
+        $filename = $pathinfo['filename'];
+
+        return ['os' => 'iOS',
+            'device' => $this->device($filename),
+            'url' => 'itms-services://?action=download-manifest&url='. action('PlistController@getPlist', [$appId, $filename])];
+    }
+
+    private function plist($appId, $file, $disk)
     {
     	$pathinfo = pathinfo($file);
     	$extension = $pathinfo['extension'];
@@ -59,7 +56,7 @@ class AppController extends Controller
     	'url' => 'itms-services://?action=download-manifest&url='. $disk->url($file)];
     }
 
-    private function apk($file, $disk)
+    private function apk($appId, $file, $disk)
     {
     	$pathinfo = pathinfo($file);
     	$extension = $pathinfo['extension'];

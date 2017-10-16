@@ -12,7 +12,7 @@
         <tbody>
         @foreach($apps as $app)
         <tr>
-            <td><a href="{{action('Admin\AppController@show', [$app->id])}}">{{$app->id}}</a></td>
+            <td><a href="{{action('Admin\AppController@show', [$app->app_id])}}">{{$app->app_id}}</a></td>
             <td>{{$app->name}}</td>
             <td><a href="{{$app->url}}">{{$app->url}}</a></td>
         </tr>

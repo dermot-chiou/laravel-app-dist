@@ -1,6 +1,6 @@
 <template>
     <div>
-        <router-link v-for="app in apps" :key="app.id" :to="app.id" class="btn btn-primary" >{{app.name}}</router-link>
+        <router-link v-for="app in apps" :key="app.app_id" :to="app.app_id" class="btn btn-primary" >{{app.name}}</router-link>
     </div>
 </template>
 
@@ -13,6 +13,7 @@
         mounted() {
             this.$http.get('/apps').then(response => {
                 this.apps = response.body;
+                console.log(this.apps);
             }, response => {
 
             });

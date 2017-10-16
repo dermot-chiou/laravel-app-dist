@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\MobileApp;
+use App\MobileAppFile;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Routing\UrlGenerator;
@@ -19,13 +21,13 @@ class AppController extends Controller
 
     public function index()
     {
-        $dirs = $this->disk->directories('apps');
-        $apps = [];
-        foreach ($dirs as $dir)
+        $apps = MobileApp::all();
+        $apps->load('files');
+
+        foreach ($apps as $app)
         {
-            $manifest = json_decode($this->disk->get($dir.'/manifest.json'));
-            $manifest->url = $this->url->to('/#/'.$manifest->id);
-            $apps[] = $manifest;
+            $app->url =  $this->url->to('/#/'.$app->app_id);
+
         }
 
         return view('admin.app.index', compact('apps'));
@@ -33,9 +35,10 @@ class AppController extends Controller
 
     public function show($appId)
     {
-        if (!$this->disk->has('apps/'.$appId.'/manifest.json'))
+        $app = MobileApp::where('app_id', $appId)->first();
+        if(!$app)
             return redirect()->action('Admin\AppController@index');
-        $app = json_decode($this->disk->get('apps/'.$appId.'/manifest.json'));
+        $app->load('files');
         $url = $this->url->to('/#/'.$appId);
         return view('admin.app.show', compact('app', 'url'));
     }
@@ -70,18 +73,28 @@ class AppController extends Controller
 
     public function destroy($appId, $file = null)
     {
+        $mobileApp = MobileApp::where('app_id', $appId)->first();
+
         $dir = 'apps/'.$appId;
         if ($file == null && $this->disk->has($dir))
+        {
             $this->disk->deleteDirectory($dir);
+            foreach ($mobileApp->files() as $file)
+            {
+                $file->delete();
+            }
+
+            $mobileApp->delete();
+        }
+
         else
         {
             $filePath = $dir.'/'.$file;
             if ($this->disk->has($filePath))
                 $this->disk->delete($filePath);
 
-            $app = json_decode($this->disk->get('apps/'.$appId.'/manifest.json'), true);
-            unset($app[$file]);
-            $this->disk->put('apps/'.$appId.'/manifest.json', json_encode($app));
+            $mobileAppFile = $mobileApp->files()->where('file_name', $file)->first();
+            $mobileAppFile->delete();
         }
 
         return redirect()->back();
@@ -89,6 +102,7 @@ class AppController extends Controller
 
     private function storeIPA($file, $plist)
     {
+
         $appId = null;
         $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $zip = \zip_open($file->getRealPath());
@@ -141,17 +155,26 @@ class AppController extends Controller
                         $disk->put($appStorePath.$fileName.'.plist', $distributionPlist);
                         \zip_entry_close($zip_entry);
 
-                        $manifest = [];
-                        if($disk->exists($appStorePath.'manifest.json'))
+                        $mobileApp = MobileApp::firstOrNew(['app_id' => $plist['CFBundleIdentifier']]);
+                        $mobileApp->name = $plist['CFBundleDisplayName'];
+                        $mobileApp->save();
+
+                        $mobileAppFile = $mobileApp->files()->where('file_name', $file->getClientOriginalName())->first();
+                        if ($mobileAppFile == null)
                         {
-                            $manifest = json_decode($disk->get($appStorePath.'manifest.json'), true);
+                            $mobileAppFile = MobileAppFile::create([
+                                'app_id' => $mobileApp->id,
+                                'file_name' => $file->getClientOriginalName(),
+                                'version' => $plist['CFBundleVersion'],
+                            ]);
+                        }
+                        else
+                        {
+                            $mobileAppFile->version = $plist['CFBundleVersion'];
+                            $mobileAppFile->save();
                         }
 
-                        $manifest['id'] = $plist['CFBundleIdentifier'];
-                        $manifest[$file->getClientOriginalName()]['version'] = $plist['CFBundleVersion'];
-                        $manifest['name'] = $plist['CFBundleDisplayName'];
 
-                        $disk->put($appStorePath.'manifest.json', json_encode($manifest));
                         $appId = $plist['CFBundleIdentifier'];
                         break;
                     }
@@ -182,17 +205,25 @@ class AppController extends Controller
                         $file->storeAs($appStorePath, $file->getClientOriginalName(), 'public');
                         \zip_entry_close($zip_entry);
 
-                        $manifest = [];
-                        if($disk->exists($appStorePath.'manifest.json'))
+                        $mobileApp = MobileApp::firstOrNew(['app_id' => $xml['id']]);
+                        $mobileApp->name = $xml['name'];
+                        $mobileApp->save();
+
+                        $mobileAppFile = $mobileApp->files()->where('file_name', $file->getClientOriginalName())->first();
+                        if ($mobileAppFile == null)
                         {
-                            $manifest = json_decode($disk->get($appStorePath.'manifest.json'), true);
+                            $mobileAppFile = MobileAppFile::create([
+                                'app_id' => $mobileApp->id,
+                                'file_name' => $file->getClientOriginalName(),
+                                'version' => $xml['versionNumber'],
+                            ]);
+                        }
+                        else
+                        {
+                            $mobileAppFile->version = $xml['versionNumber'];
+                            $mobileAppFile->save();
                         }
 
-                        $manifest['id'] = $xml['id'];
-                        $manifest[$file->getClientOriginalName()]['version'] = $xml['versionNumber'];
-                        $manifest['name'] = $xml['name'];
-
-                        $disk->put($appStorePath.'manifest.json', json_encode($manifest));
                         $appId = $xml['id'];
                         break;
                     }

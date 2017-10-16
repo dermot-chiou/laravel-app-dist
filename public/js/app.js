@@ -11641,7 +11641,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(12);
-module.exports = __webpack_require__(59);
+module.exports = __webpack_require__(61);
 
 
 /***/ }),
@@ -11655,7 +11655,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router__ = __webpack_require__(45);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__i18n__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_resource__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_mobile_detect__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_mobile_detect__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_mobile_detect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_mobile_detect__);
 
 /**
@@ -45851,6 +45851,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.$http.get('/apps').then(function (response) {
             _this.apps = response.body;
+            console.log(_this.apps);
         }, function (response) {});
     }
 });
@@ -45868,7 +45869,11 @@ var render = function() {
     _vm._l(_vm.apps, function(app) {
       return _c(
         "router-link",
-        { key: app.id, staticClass: "btn btn-primary", attrs: { to: app.id } },
+        {
+          key: app.app_id,
+          staticClass: "btn btn-primary",
+          attrs: { to: app.app_id }
+        },
         [_vm._v(_vm._s(app.name))]
       )
     })
@@ -45889,6 +45894,10 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(70)
+}
 var normalizeComponent = __webpack_require__(3)
 /* script */
 var __vue_script__ = __webpack_require__(53)
@@ -45897,7 +45906,7 @@ var __vue_template__ = __webpack_require__(54)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -45945,49 +45954,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            apps: {
-                info: {
-                    name: ''
-                }
-            }
+            app: {
+                name: ''
+            },
+            osList: []
         };
     },
     mounted: function mounted() {
         var _this = this;
 
         this.$http.get('/apps/' + this.$route.params.appId).then(function (response) {
-            _this.apps = response.body;
-            if (_this.$md.is('AndroidOS')) {
+            _this.app = response.body;
+            var url = {};
+            var that = _this;
+            _this.app.files.map(function (v, k) {
+                url[v.os] = {};
+                url[v.os][v.device] = v.url;
+                if (!that.osList.includes(v.os)) that.osList.push(v.os);
+            });
+            var link = null;
+            if (_this.$md.is('AndroidOS') && url.Android) {
                 if (_this.$md.phone()) {
-                    var url = _this.apps.urls.Android.phone || _this.apps.urls.Android.tablet;
-                    window.location.href = url.url;
-                    return;
+                    link = url.Android.mobile || url.Android.tablet;
                 }
 
                 if (_this.$md.tablet()) {
-                    var url = _this.apps.urls.Android.tablet || _this.apps.urls.Android.phone;
-                    window.location.href = url.url;
-                    return;
+                    link = url.Android.tablet || url.Android.mobile;
                 }
-            } else if (_this.$md.is('iOS')) {
+            } else if (_this.$md.is('iOS') && url.iOS) {
                 if (_this.$md.phone()) {
-                    var url = _this.apps.urls.iOS.phone || _this.apps.urls.iOS.tablet;
-                    window.location.href = url.url;
-                    return;
+                    link = url.iOS.mobile || url.iOS.tablet;
                 }
 
                 if (_this.$md.tablet()) {
-                    var url = _this.apps.urls.iOS.tablet || _this.apps.urls.iOS.phone;
-                    window.location.href = url.url;
-                    return;
+                    link = url.iOS.tablet || url.iOS.mobile;
                 }
             }
-
-            alert('你的裝置不支援，請用手機掃描QR Code下載');
+            if (link) window.location.href = link;else alert('你的裝置不支援，請用手機掃描QR Code下載');
         }, function (response) {});
     }
 });
@@ -46001,7 +46016,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h4", [_vm._v(_vm._s(_vm.apps.info.name))]),
+    _c("h4", [_vm._v(_vm._s(_vm.app.name))]),
+    _vm._v(" "),
+    _c("p", [_vm._v("支援裝置")]),
+    _vm._v(" "),
+    _c(
+      "p",
+      [
+        _vm._l(_vm.osList, function(os) {
+          return _c("span", { staticClass: "label label-success" }, [
+            _vm._v(_vm._s(os))
+          ])
+        }),
+        _vm._v("  \n    ")
+      ],
+      2
+    ),
     _vm._v(" "),
     _c("img", {
       staticClass: "qrcode img-thumbnail",
@@ -49163,20 +49193,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 
 /***/ }),
 /* 59 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 60 */,
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
-/* 65 */,
-/* 66 */,
-/* 67 */,
-/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // THIS FILE IS GENERATED - DO NOT EDIT!
@@ -50162,7 +50178,7 @@ define(function () {
     if (typeof module !== 'undefined' && module.exports) {
         return function (factory) { module.exports = factory(); };
     } else if (true) {
-        return __webpack_require__(69);
+        return __webpack_require__(60);
     } else if (typeof window !== 'undefined') {
         return function (factory) { window.MobileDetect = factory(); };
     } else {
@@ -50172,12 +50188,66 @@ define(function () {
 })());
 
 /***/ }),
-/* 69 */
+/* 60 */
 /***/ (function(module, exports) {
 
 module.exports = function() {
 	throw new Error("define cannot be used indirect");
 };
+
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 62 */,
+/* 63 */,
+/* 64 */,
+/* 65 */,
+/* 66 */,
+/* 67 */,
+/* 68 */,
+/* 69 */,
+/* 70 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(71);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(41)("3eeac7ba", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-23d4f08c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Download.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-23d4f08c\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0&bustCache!./Download.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 71 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(40)(undefined);
+// imports
+
+
+// module
+exports.push([module.i, "\n.label{\n    margin: 0 2px;\n}\n", ""]);
+
+// exports
 
 
 /***/ })

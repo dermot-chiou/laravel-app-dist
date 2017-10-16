@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Lang;
 class LoginController extends Controller
 {
 
-
     /**
      * Where to redirect users after login.
      *

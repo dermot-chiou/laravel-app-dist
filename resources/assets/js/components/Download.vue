@@ -1,52 +1,62 @@
 <template>
     <div>
-        <h4>{{apps.info.name}}</h4>
+        <h4>{{app.name}}</h4>
+        <p>支援裝置</p>
+        <p>
+            <span v-for="os in osList" class="label label-success">{{os}}</span> &nbsp;
+        </p>
         <img class="qrcode img-thumbnail" :src="this.$qrcode()" alt="">
     </div>
 </template>
-
+<style>
+    .label{
+        margin: 0 2px;
+    }
+</style>
 <script>
     export default {
         data() {
             return {
-              apps: {
-                info: {
-                    name :''
-                }
-              }
+              app: {
+                name :''
+              },
+              osList: [],
             }},
         mounted() {
             this.$http.get('/apps/' + this.$route.params.appId).then(response => {
-                this.apps = response.body;
-                if (this.$md.is('AndroidOS')) {
+                this.app = response.body;
+                var url = {};
+                var that = this;
+                this.app.files.map(function(v, k)
+                {
+                    url[v.os] = {};
+                    url[v.os][v.device] = v.url;
+                    if(!that.osList.includes(v.os))
+                        that.osList.push(v.os);
+                });
+                var link = null;
+                if (this.$md.is('AndroidOS') && url.Android) {
                     if (this.$md.phone()) {
-                        var url = (this.apps.urls.Android.phone || this.apps.urls.Android.tablet);
-                        window.location.href = (url.url);    
-                        return;
+                        link = url.Android.mobile || url.Android.tablet;
                     }
 
                     if (this.$md.tablet()) {
-                        var url = (this.apps.urls.Android.tablet || this.apps.urls.Android.phone);
-                        window.location.href = (url.url);    
-                        return;
+                        link = url.Android.tablet || url.Android.mobile;
                     }
-                    
                 }
-                else if (this.$md.is('iOS')) {
+                else if (this.$md.is('iOS') && url.iOS) {
                     if (this.$md.phone()) {
-                        var url = (this.apps.urls.iOS.phone || this.apps.urls.iOS.tablet);
-                        window.location.href = (url.url);    
-                        return;
+                        link = url.iOS.mobile || url.iOS.tablet;
                     }
 
                     if (this.$md.tablet()) {
-                        var url = (this.apps.urls.iOS.tablet || this.apps.urls.iOS.phone);
-                        window.location.href = (url.url);    
-                        return;
+                        link = url.iOS.tablet || url.iOS.mobile;
                     }
                 }
-
-                alert('你的裝置不支援，請用手機掃描QR Code下載');
+                if(link)
+                    window.location.href = link;
+                else
+                    alert('你的裝置不支援，請用手機掃描QR Code下載');
                 
             }, response => {
 
