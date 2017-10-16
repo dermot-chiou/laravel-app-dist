@@ -42,7 +42,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{action('admin\IndexController@index')}}">法老 App</a>
+            <a class="navbar-brand" href="{{action('Admin\IndexController@index')}}">法老 App</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
 
@@ -54,7 +54,7 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active"><a href="{{action('admin\AppController@index')}}">App 管理 <span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="{{action('Admin\AppController@index')}}">App 管理 <span class="sr-only">(current)</span></a></li>
                 </ul>
 
             </div>

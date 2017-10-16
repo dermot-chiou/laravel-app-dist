@@ -34,7 +34,7 @@ class AppController extends Controller
     public function show($appId)
     {
         if (!$this->disk->has('apps/'.$appId.'/manifest.json'))
-            return redirect()->action('admin\AppController@index');
+            return redirect()->action('Admin\AppController@index');
         $app = json_decode($this->disk->get('apps/'.$appId.'/manifest.json'));
         $url = $this->url->to('/#/'.$appId);
         return view('admin.app.show', compact('app', 'url'));
@@ -53,9 +53,9 @@ class AppController extends Controller
         if ($request->app_file->getClientOriginalExtension() == 'apk')
             $appId = $this->storeAPK($request->app_file);
         if ($appId == null)
-            return redirect()->action('admin\AppController@index');
+            return redirect()->action('Admin\AppController@index');
         else
-            return redirect()->action('admin\AppController@show', [$appId]);
+            return redirect()->action('Admin\AppController@show', [$appId]);
     }
 
     public function edit($appId)

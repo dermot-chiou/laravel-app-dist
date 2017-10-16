@@ -1,6 +1,6 @@
 @extends('layout.admin')
 @section('content')
-    <form action="{{action('admin\AppController@store')}}" method="post" enctype="multipart/form-data" class="col-md-10 col-md-offset-1">
+    <form action="{{action('Admin\AppController@store')}}" method="post" enctype="multipart/form-data" class="col-md-10 col-md-offset-1">
         {{ csrf_field() }}
         <input type="hidden" name="_method" value="POST">
         <div class="form-group">

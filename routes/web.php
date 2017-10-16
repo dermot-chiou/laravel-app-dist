@@ -18,7 +18,7 @@ Route::get('/', function () {
 Route::get('apps', 'AppController@index');
 Route::get('apps/{appId}', 'AppController@show');
 
-Route::group(['prefix' => 'admin', 'namespace' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function () {
     Route::get('/', 'IndexController@index');
     Route::get('/app', 'AppController@index');
     Route::get('/app/create', 'AppController@create');
