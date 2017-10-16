@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layouts.admin')
 @section('content')
     <form action="{{action('Admin\AppController@store')}}" method="post" enctype="multipart/form-data" class="col-md-10 col-md-offset-1">
         {{ csrf_field() }}

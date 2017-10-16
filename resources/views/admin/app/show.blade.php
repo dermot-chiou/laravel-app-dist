@@ -1,4 +1,4 @@
-@extends('layout.admin')
+@extends('layouts.admin')
 @section('content')
 <h1>{{$app->id}}</h1>
 <h3>{{$app->name}}</h3>

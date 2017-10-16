@@ -50,22 +50,7 @@
     </div>
 </nav>
 <div class="container-fluid">
-    @section('sidebar')
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                    <li class="active"><a href="{{action('Admin\AppController@index')}}">App 管理 <span class="sr-only">(current)</span></a></li>
-                </ul>
-
-            </div>
-            @show
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <div class="row">
-                <a href="{{ url()->previous() }}">上一頁</a>
-                </div>
-                @yield('content')
-            </div>
-        </div>
+    @yield('content')
 
 </div>
 

@@ -168,6 +168,7 @@ return [
          * Package Service Providers...
          */
         Nathanmac\Utilities\Parser\ParserServiceProvider::class,
+        PragmaRX\Firewall\Vendor\Laravel\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -226,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Parser' => Nathanmac\Utilities\Parser\Facades\Parser::class,
+        'Firewall' => PragmaRX\Firewall\Vendor\Laravel\Facade::class,
 
     ],
 
