@@ -32,7 +32,7 @@ class PlistController extends Controller
 			<key>metadata</key>
 			<dict>
 				<key>bundle-identifier</key>
-				<string>'.$mobileApp->app_id.'</string>
+				<string>'.$mobileAppFile->bundle_id.'</string>
 				<key>bundle-version</key>
 				<string>'.$mobileAppFile->version.'</string>
 				<key>kind</key>

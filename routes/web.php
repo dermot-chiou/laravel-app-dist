@@ -27,7 +27,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/app/create', 'AppController@create');
     Route::post('/app/create', 'AppController@store');
     Route::get('/app/{appId}', 'AppController@show');
-    Route::delete('/app/{appId}/{file?}', 'AppController@destroy');
+    Route::delete('/app/{appId}', 'AppController@destroy');
+    Route::get('/app/{appId}/create', 'AppFileController@create');
+    Route::post('/app/{appId}/create', 'AppFileController@store');
+    Route::delete('/app/{appId}/{file}', 'AppFileController@destroy');
 });
 
 
