@@ -9,8 +9,9 @@
         <input type="hidden" name="_method" value="PUT">
         <label for="name">App 名稱</label>
         <input type="text" value="{{$app->name}}" name="name" class="form-control">
-        <label for="description">描述</label>
+        <label for="description">描述 (支援 <a href="http://markdown.tw/">markdown</a>)</label>
         <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{$app->description}}</textarea>
+        <br>
         <input type="submit" value="送出" class="btn btn-primary">
     </form>
 @endsection

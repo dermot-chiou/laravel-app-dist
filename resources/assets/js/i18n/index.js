@@ -18,7 +18,7 @@ const messages = {
     },
     'zh-TW' : {
         pharaoh: {
-            app_download: '法老 APP 下載',
+            app_download: '法老王 APP 下載',
             warrior: '武士道',
             golden_cat: '金錢貓',
             pharaoh_poker: '法老撲克',

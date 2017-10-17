@@ -1,0 +1,16 @@
+
+// Fonts
+@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+
+// Variables
+@import "variables";
+
+$icon-font-path: "~bootstrap-sass/fonts" !default;
+// Bootstrap
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "../sb-admin-2/css/sb-admin-2.css";
+
+$fa-font-path: "~font-awesome/fonts" !default;
+
+@import '~font-awesome/scss/font-awesome.scss';

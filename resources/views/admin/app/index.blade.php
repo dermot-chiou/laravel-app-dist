@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-    <a href="{{action('Admin\AppController@create')}}" class="btn btn-primary">上傳檔案</a>
     <table class="table">
         <thead>
         <tr>

@@ -200,47 +200,33 @@ class AppController extends Controller
     {
         $appId = null;
         $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $zip = \zip_open($file->getRealPath());
-        if ($zip)
+        $apk = new \ApkParser\Parser($file->getRealPath());
+        $manifest = $apk->getManifest();
+        $ids = explode('.', $manifest->getPackageName());
+        if ($ids[0] == 'air')
+            unset($ids[0]);
+        $appId = implode('.', $ids);
+        $version = $manifest->getVersionName();
+
+        $mobileApp = MobileApp::firstOrNew(['app_id' => $appId]);
+        $mobileApp->name = $appId;
+        $mobileApp->save();
+
+        $mobileAppFile = $mobileApp->files()->where('file_name', $file->getClientOriginalName())->first();
+        if ($mobileAppFile == null)
         {
-            while ($zip_entry = \zip_read($zip)) {
-                $fileinfo = \pathinfo(\zip_entry_name($zip_entry));
-                if ($fileinfo['basename']=="application.xml")
-                {
-                    if (\zip_entry_open($zip, $zip_entry, "r")) {
-                        $disk = Storage::disk('public');
-                        $buf =\ zip_entry_read($zip_entry, \zip_entry_filesize($zip_entry));
-                        $xml = \Parser::xml($buf);
-                        $appStorePath = $this->getAppStorePath($xml['id']);
-                        $file->storeAs($appStorePath, $file->getClientOriginalName(), 'public');
-                        \zip_entry_close($zip_entry);
-
-                        $mobileApp = MobileApp::firstOrNew(['app_id' => $xml['id']]);
-                        $mobileApp->name = $xml['name'];
-                        $mobileApp->save();
-
-                        $mobileAppFile = $mobileApp->files()->where('file_name', $file->getClientOriginalName())->first();
-                        if ($mobileAppFile == null)
-                        {
-                            $mobileAppFile = MobileAppFile::create([
-                                'app_id' => $mobileApp->id,
-                                'file_name' => $file->getClientOriginalName(),
-                                'version' => $xml['versionNumber'],
-                            ]);
-                        }
-                        else
-                        {
-                            $mobileAppFile->version = $xml['versionNumber'];
-                            $mobileAppFile->save();
-                        }
-
-                        $appId = $xml['id'];
-                        break;
-                    }
-                }
-            }
-            \zip_close($zip);
+            $mobileAppFile = MobileAppFile::create([
+                'app_id' => $mobileApp->id,
+                'file_name' => $file->getClientOriginalName(),
+                'version' => $version,
+            ]);
         }
+        else
+        {
+            $mobileAppFile->version = $version;
+            $mobileAppFile->save();
+        }
+
         return $appId;
     }
 

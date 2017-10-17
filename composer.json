@@ -13,7 +13,8 @@
         "laravel/tinker": "~1.0",
         "nathanmac/Parser": "^4.3",
         "pragmarx/firewall": "^2.1",
-        "rodneyrehm/plist": "^2.0"
+        "rodneyrehm/plist": "^2.0",
+        "tufanbarisyildirim/php-apk-parser": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

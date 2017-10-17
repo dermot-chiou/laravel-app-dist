@@ -13,12 +13,16 @@
         "axios": "^0.16.2",
         "bootstrap-sass": "^3.3.7",
         "cross-env": "^5.0.1",
-        "jquery": "^3.1.1",
         "laravel-mix": "^1.0",
+        "less": "^3.0.0-alpha.3",
+        "less-loader": "^4.0.5",
         "lodash": "^4.17.4",
         "vue": "^2.1.10"
     },
     "dependencies": {
+        "font-awesome": "^4.7.0",
+        "jquery": "^3.2.1",
+        "metismenu": "^2.7.0",
         "mobile-detect": "^1.3.7",
         "vue-i18n": "^7.3.1",
         "vue-markdown": "^2.2.4",

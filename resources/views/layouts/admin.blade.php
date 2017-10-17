@@ -7,14 +7,14 @@
     <meta name="csrf-token" content="{{csrf_token()}}">
     <title>Laravel</title>
 
-    <link rel="stylesheet" href="{{asset('css/app.css')}}">
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
     <style>
         body{
             margin-top: 60px;
         }
         .sidebar{
             position: fixed;
-            top: 51px;
+            top: 0px;
             bottom: 0;
             left: 0;
             z-index: 1000;
@@ -57,23 +57,34 @@
 </nav>
 <div class="container-fluid">
     @section('sidebar')
-        <div class="row">
-            <div class="col-sm-3 col-md-2 sidebar">
-                <ul class="nav nav-sidebar">
-                    <li class="active"><a href="{{action('Admin\AppController@index')}}">App 管理 <span class="sr-only">(current)</span></a></li>
-                </ul>
 
+        <div class="row">
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav in" id="side-menu">
+                        <li class="active">
+                            <a href="#"><i class="fa fa-apple fa-fw"></i> <i class="fa fa-android fa-fw"></i> App 管理<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse in" aria-expanded="true" style="">
+                                <li class="">
+                                    <a href="{{action('Admin\AppController@index')}}">App 列表</a>
+                                </li>
+                                <li>
+                                    <a href="{{action('Admin\AppController@create')}}">App 上傳</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
             </div>
             @show
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <div class="row">
-                <a href="{{ url()->previous() }}">上一頁</a>
-                </div>
                 @yield('content')
             </div>
         </div>
 
 </div>
-
+<script src="{{asset('js/admin.js')}}"></script>
 </body>
 </html>
