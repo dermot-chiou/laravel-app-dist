@@ -76,6 +76,7 @@ class AppController extends Controller
             abort(404);
 
         $app->description = $request->description;
+        $app->name = $request->name;
         $app->save();
         return redirect()->action('Admin\AppController@edit', [$appId]);
     }
