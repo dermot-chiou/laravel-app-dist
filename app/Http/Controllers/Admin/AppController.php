@@ -86,6 +86,10 @@ class AppController extends Controller
         $mobileApp = MobileApp::where('app_id', $appId)->first();
 
         $dir = 'apps/'.$appId;
+        if (!$this->disk->has($dir))
+        {
+            $mobileApp->delete();
+        }
         if ($file == null && $this->disk->has($dir))
         {
             $this->disk->deleteDirectory($dir);
@@ -97,7 +101,7 @@ class AppController extends Controller
             $mobileApp->delete();
         }
 
-        else
+        else if($file != null)
         {
             $filePath = $dir.'/'.$file;
             if ($this->disk->has($filePath))
@@ -226,6 +230,9 @@ class AppController extends Controller
             $mobileAppFile->version = $version;
             $mobileAppFile->save();
         }
+
+        $appStorePath = $this->getAppStorePath($appId);
+        $file->storeAs($appStorePath, $file->getClientOriginalName(), 'public');
 
         return $appId;
     }
