@@ -1,6 +1,8 @@
 <template>
     <div>
-        <router-link v-for="app in apps" :key="app.app_id" :to="app.app_id" class="btn btn-primary" >{{app.name}}</router-link>
+        <p v-for="app in apps" :key="app.app_id">
+            <router-link :to="app.app_id" class="btn btn-primary" >{{app.name}}</router-link>
+        </p>
     </div>
 </template>
 

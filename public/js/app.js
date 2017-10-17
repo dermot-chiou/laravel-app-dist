@@ -49510,6 +49510,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -49539,13 +49541,16 @@ var render = function() {
     "div",
     _vm._l(_vm.apps, function(app) {
       return _c(
-        "router-link",
-        {
-          key: app.app_id,
-          staticClass: "btn btn-primary",
-          attrs: { to: app.app_id }
-        },
-        [_vm._v(_vm._s(app.name))]
+        "p",
+        { key: app.app_id },
+        [
+          _c(
+            "router-link",
+            { staticClass: "btn btn-primary", attrs: { to: app.app_id } },
+            [_vm._v(_vm._s(app.name))]
+          )
+        ],
+        1
       )
     })
   )
