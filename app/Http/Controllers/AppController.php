@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\MobileApp;
 use Illuminate\Http\Request;
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\Facades\Storage;
+
 
 class AppController extends Controller
 {
     private $disk;
-    public function __construct()
+    private $url;
+    public function __construct(UrlGenerator $url)
     {
         $this->disk = Storage::disk('public');
+        $this->url = $url;
     }
 
     public function index()
@@ -84,6 +88,7 @@ class AppController extends Controller
         if(!$app)
             abort(404);
         $resp = [];
+
         foreach ($app->files as $file)
         {
             $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
@@ -94,7 +99,8 @@ class AppController extends Controller
             $os = $extension == 'ipa' ? 'iOS' : 'Android';
             $data = $this->{$extension}($app->app_id, 'apps/'.$app->app_id.'/'.$file->file_name, $this->disk);
             $resp[$os][$device]['ver'] = $file->version;
-            $resp[$os][$device]['url'] = $data['url'];
+            $resp[$os][$device]['url'] = $this->url->to('/#/'.$app->app_id);
+            $resp[$os][$device]['file_url'] = $data['url'];
         }
 
         return $resp;
