@@ -37,6 +37,10 @@
     </style>
 </head>
 <body>
+<script src="{{asset('js/admin.js')}}"></script>
+<script>
+
+</script>
 <form id="logout-form" action="{{action('Auth\LoginController@logout')}}" method="POST">
     {{csrf_field()}}
 </form>
@@ -84,11 +88,20 @@
             </div>
             @show
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 @yield('content')
             </div>
         </div>
 
 </div>
-<script src="{{asset('js/admin.js')}}"></script>
+
 </body>
 </html>

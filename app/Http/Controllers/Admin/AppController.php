@@ -77,6 +77,17 @@ class AppController extends Controller
 
     public function update($appId, Request $request)
     {
+        $validator = \Validator::make($request->all(), [
+            'name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
         $app = MobileApp::where('app_id', $appId)->first();
         if (!$app)
             abort(404);

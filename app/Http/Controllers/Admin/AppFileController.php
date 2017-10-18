@@ -28,6 +28,16 @@ class AppFileController extends Controller
     }
     public function store($appId, Request $request,  \CFPropertyList\CFPropertyList $plist)
     {
+        $validator = \Validator::make($request->all(), [
+            'app_file' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
         if($request->app_file->getClientOriginalExtension() == 'ipa')
             $data = $this->parseIAP($request->app_file, $plist);
         if ($request->app_file->getClientOriginalExtension() == 'apk')
