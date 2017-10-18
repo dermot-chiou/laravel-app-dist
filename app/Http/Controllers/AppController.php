@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Storage;
 
 class AppController extends Controller
 {
+    private $disk;
+    public function __construct()
+    {
+        $this->disk = Storage::disk('public');
+    }
+
     public function index()
     {
         $apps = MobileApp::all();
@@ -23,7 +29,7 @@ class AppController extends Controller
     		$pathinfo = pathinfo($file->file_name);
     		$extension = $pathinfo['extension'];
     		if (method_exists($this, $extension)) {
-    			$data = $this->{$extension}($appId, 'apps/'.$app->app_id.'/'.$file->file_name, Storage::disk('public'));
+    			$data = $this->{$extension}($appId, 'apps/'.$app->app_id.'/'.$file->file_name, $this->disk);
     			//$resp['urls'][$data['os']][$data['device']] = $data;
                 $file->os = $data['os'];
                 $file->device = $data['device'];
@@ -86,8 +92,9 @@ class AppController extends Controller
             $device = $filename[count($filename) - 1] == 'tablet' ? 'pad' : 'mobile';
 
             $os = $extension == 'ipa' ? 'iOS' : 'Android';
-
-            $resp[$os][$device] = $file->version;
+            $data = $this->{$extension}($app->app_id, 'apps/'.$app->app_id.'/'.$file->file_name, $this->disk);
+            $resp[$os][$device]['ver'] = $file->version;
+            $resp[$os][$device]['url'] = $data['url'];
         }
 
         return $resp;
