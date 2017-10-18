@@ -34,6 +34,7 @@
         mounted() {
             this.$http.get('/apps/' + this.$route.params.appId).then(response => {
                 this.app = response.body;
+                window.document.title = "法老王 APP " + this.app.name
                 var url = {};
                 var that = this;
                 this.app.files.map(function(v, k)
