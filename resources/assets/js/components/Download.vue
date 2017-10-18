@@ -7,6 +7,24 @@
         </p>
         <img class="qrcode img-thumbnail" :src="this.$qrcode()" alt="">
         <vue-markdown :source="app.description"></vue-markdown>
+
+        <div class="modal fade not-support" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">不支援</h5>
+                </div>
+                <div class="modal-body">
+                    <h6>
+                        你的裝置不支援，請用手機掃描QR Code下載
+                    </h6>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
 </template>
 <style>
@@ -64,13 +82,13 @@
                     }
 
                     if (this.$md.tablet()) {
-                        link = url.iOS.phone || url.iOS.mobile;
+                        link = url.iOS.tablet || url.iOS.phone;
                     }
                 }
                 if(link)
                     window.location.href = link;
                 else
-                    alert('你的裝置不支援，請用手機掃描QR Code下載');
+                    window.$('.not-support').modal('show');
                 
             }, response => {
 
