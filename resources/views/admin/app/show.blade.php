@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+{{ Breadcrumbs::render('app-show', $app) }}
 <h1>{{$app->app_id}}</h1>
 <h3>{{$app->name}}</h3>
 <p>下載連結</p>

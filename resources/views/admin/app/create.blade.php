@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('app-create') }}
     <div class="row">
     <form action="{{action('Admin\AppController@store')}}" method="post" class="col-md-10 col-md-offset-1">
         {{ csrf_field() }}

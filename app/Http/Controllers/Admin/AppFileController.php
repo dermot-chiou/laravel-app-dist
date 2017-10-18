@@ -24,7 +24,7 @@ class AppFileController extends Controller
 
     public function create($appId)
     {
-        return view('admin.file.create', compact('appId'));
+        return view('admin.file.create', ['app' => $this->mobileApp]);
     }
     public function store($appId, Request $request,  \CFPropertyList\CFPropertyList $plist)
     {

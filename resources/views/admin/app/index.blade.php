@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+    {{ Breadcrumbs::render('app') }}
     <table class="table">
         <thead>
         <tr>

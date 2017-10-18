@@ -30,6 +30,10 @@
             adding-right: 40px;
             padding-left: 40px;
         }
+
+        .breadcrumb{
+            background-color: #F4F8FA;
+        }
     </style>
 </head>
 <body>
