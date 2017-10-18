@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::get('apps', 'AppController@index');
 Route::get('apps/{appId}', 'AppController@show');
+Route::get('apps/{appId}/version', 'AppController@version');
 Route::get('apps/{appId}/{filename}.plist', 'PlistController@getPlist');
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {

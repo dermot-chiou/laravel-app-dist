@@ -71,4 +71,27 @@ class AppController extends Controller
     {
     	return strpos($filename, 'mobile') !== false ? 'phone' : 'tablet';
     }
+
+    public function version($appId)
+    {
+        $app = MobileApp::where('app_id', $appId)->first();
+        if(!$app)
+            abort(404);
+        $resp = [];
+        foreach ($app->files as $file)
+        {
+            $extension = pathinfo($file->file_name, PATHINFO_EXTENSION);
+            $filename = pathinfo($file->file_name, PATHINFO_FILENAME);
+            $filename = explode('-', $filename);
+            $device = $filename[count($filename) - 1] == 'tablet' ? 'pad' : 'mobile';
+
+            $os = $extension == 'ipa' ? 'iOS' : 'Android';
+
+            $resp[$os][$device] = $file->version;
+        }
+
+        return $resp;
+
+
+    }
 }
