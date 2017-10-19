@@ -48,6 +48,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+
+        if (strpos($request->path(), '%23') !== false)
+        {
+            $path = str_replace('%23', '#', $request->path());
+            return redirect()->to('/'.$path);
+        }
+
         return parent::render($request, $exception);
     }
 }

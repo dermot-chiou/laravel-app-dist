@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'IndexController@index');
+
+Route::get('/%23/{vue_capture?}', 'IndexController@vue')->where('vue_capture', '[\/\w\.-]*');
 
 Route::get('apps', 'AppController@index');
 Route::get('apps/{appId}', 'AppController@show');
