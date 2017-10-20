@@ -30884,6 +30884,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             apps: ''
         };
     },
+
+    computed: {
+        rootUrl: function rootUrl() {
+            return window.location.origin;
+        }
+    },
     mounted: function mounted() {
         var _this = this;
 
@@ -30905,22 +30911,17 @@ var render = function() {
   return _c(
     "div",
     _vm._l(_vm.apps, function(app) {
-      return _c(
-        "div",
-        { key: app.app_id, staticClass: "row" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass:
-                "btn btn-lg btn-primary col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-2 col-md-offset-5",
-              attrs: { to: app.app_id, target: "_blank" }
-            },
-            [_vm._v(_vm._s(app.name))]
-          )
-        ],
-        1
-      )
+      return _c("div", { key: app.app_id, staticClass: "row" }, [
+        _c(
+          "a",
+          {
+            staticClass:
+              "btn btn-lg btn-primary col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-2 col-md-offset-5",
+            attrs: { href: _vm.rootUrl + "/download/#/" + app.app_id }
+          },
+          [_vm._v(_vm._s(app.name))]
+        )
+      ])
     })
   )
 }
