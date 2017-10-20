@@ -85,6 +85,7 @@
                         link = url.iOS.tablet || url.iOS.phone;
                     }
                 }
+                console.log(link);
                 if(link)
                     window.location.href = link;
                 else
