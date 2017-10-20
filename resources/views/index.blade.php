@@ -8,7 +8,7 @@
 
         <title>法老王 APP</title>
         
-        <link rel="stylesheet" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" href="{{asset('css/app.css').'?v=1.0.0'}}">
         
         
     </head>
@@ -16,6 +16,6 @@
         <div id="app">
             
         </div>
-        <script type="text/javascript" src="{{asset('js/app.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/app.js').'?v=1.0.0'}}"></script>
     </body>
 </html>
