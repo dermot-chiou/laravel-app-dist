@@ -30914,7 +30914,7 @@ var render = function() {
             {
               staticClass:
                 "btn btn-lg btn-primary col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-2 col-md-offset-5",
-              attrs: { to: app.app_id }
+              attrs: { to: app.app_id, target: "_blank" }
             },
             [_vm._v(_vm._s(app.name))]
           )
