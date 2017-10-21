@@ -10,6 +10,7 @@ import router from './router'
 import i18n from './i18n'
 import VueResource from 'vue-resource'
 import MobileDetect from 'mobile-detect'
+import VueQriously from 'vue-qriously'
 window.$ = window.jQuery = require('jquery')
 import 'bootstrap-sass';
 
@@ -17,6 +18,8 @@ import 'bootstrap-sass';
 
 
 window.Vue = Vue;
+
+Vue.use(VueQriously);
 
 Vue.use(VueResource);
 

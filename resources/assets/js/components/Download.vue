@@ -5,8 +5,9 @@
         <p>
             <span v-for="os in osList" class="label label-success">{{os}}</span> &nbsp;
         </p>
-        <img class="qrcode img-thumbnail" :src="this.$qrcode()" alt="">
-        <vue-markdown :source="app.description"></vue-markdown>
+        <qriously :value="href" :size="200" class="qrcode img-thumbnail"></qriously>
+
+        <vue-markdown :source="app.description" v-show="app.description"></vue-markdown>
 
         <div class="modal fade not-support" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -46,6 +47,11 @@
               },
               osList: [],
         }},
+        computed: {
+            href: function(){
+                return window.location.href;
+            }
+        },
         components: {
             VueMarkdown
         },

@@ -24,7 +24,6 @@
         mounted() {
             this.$http.get('/apps').then(response => {
                 this.apps = response.body;
-                console.log(this.apps);
             }, response => {
 
             });
