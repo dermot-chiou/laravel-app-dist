@@ -107,7 +107,7 @@ class AppFileController extends Controller
 
                         return [
                             'app_id' => $plist['CFBundleIdentifier'],
-                            'version' => $plist['CFBundleVersion']
+                            'version' => $plist['CFBundleShortVersionString']
                         ];
                     }
                 }
