@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'cros' => \App\Http\Middleware\Cros::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'fw-only-whitelisted' => \PragmaRX\Firewall\Middleware\FirewallWhitelist::class,
         'fw-block-blacklisted' => \PragmaRX\Firewall\Middleware\FirewallBlacklist::class,
