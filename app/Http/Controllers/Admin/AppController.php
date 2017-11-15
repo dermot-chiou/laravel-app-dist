@@ -15,7 +15,7 @@ class AppController extends Controller
     private $url;
     public function __construct(UrlGenerator $url)
     {
-        $this->disk = Storage::disk('public');
+        $this->disk = Storage::disk(config('disk.default'));
         $this->url = $url;
     }
 

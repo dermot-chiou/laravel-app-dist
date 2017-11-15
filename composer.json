@@ -15,7 +15,8 @@
         "nathanmac/Parser": "^4.3",
         "pragmarx/firewall": "^2.1",
         "rodneyrehm/plist": "^2.0",
-        "tufanbarisyildirim/php-apk-parser": "dev-master"
+        "tufanbarisyildirim/php-apk-parser": "dev-master",
+        "league/flysystem-aws-s3-v3":  "~1.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
@@ -30,7 +31,10 @@
         ],
         "psr-4": {
             "App\\": "app/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

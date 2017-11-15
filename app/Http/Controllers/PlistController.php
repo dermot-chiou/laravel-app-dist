@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Storage;
 class PlistController extends Controller
 {
     public function getPlist($appId, $filename){
-        $disk = Storage::disk('public');
+        $disk = Storage::disk(config('disk.default'));
         $mobileApp = MobileApp::where('app_id', $appId)->first();
         $mobileAppFile = $mobileApp->files()->where('file_name', $filename.'.ipa')->first();
-        $ipaURL = ($disk->url('apps/'.$appId.'/'.$mobileAppFile->file_name));
+        $ipaURL = cdn('apps/'.$appId.'/'.$mobileAppFile->file_name, $disk->url('apps/'.$appId.'/'.$mobileAppFile->file_name));
         $distributionPlist = '<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">

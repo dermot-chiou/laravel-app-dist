@@ -231,4 +231,7 @@ return [
 
     ],
 
+
+    'cdn' => json_decode(env('CDN_URLS', '[]'), true),
+
 ];

@@ -17,7 +17,7 @@ class AppFileController extends Controller
     {
         $this->appId = $request->route()->parameter('appId');
         $this->mobileApp = MobileApp::where('app_id', $this->appId)->first();
-        $this->disk = Storage::disk('public');
+        $this->disk = Storage::disk(config('disk.default'));
         if (!$this->mobileApp)
             abort(404);
     }
@@ -85,7 +85,7 @@ class AppFileController extends Controller
             $mobileAppFile->save();
         }
 
-        $file->storeAs('apps/'.$this->mobileApp->app_id.'/', $fileName, 'public');
+        $file->storeAs('apps/'.$this->mobileApp->app_id.'/', $fileName, config('disk.default'));
     }
 
     private function parseIAP($file, $plist)

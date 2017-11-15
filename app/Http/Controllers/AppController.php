@@ -14,7 +14,7 @@ class AppController extends Controller
     private $url;
     public function __construct(UrlGenerator $url)
     {
-        $this->disk = Storage::disk('public');
+        $this->disk = Storage::disk(config('disk.default'));
         $this->url = $url;
     }
 
@@ -99,7 +99,7 @@ class AppController extends Controller
             $os = $extension == 'ipa' ? 'iOS' : 'Android';
             $data = $this->{$extension}($app->app_id, 'apps/'.$app->app_id.'/'.$file->file_name, $this->disk);
             $resp[$os][$device]['ver'] = $file->version;
-            $resp[$os][$device]['url'] = $this->url->to('/#/'.$app->app_id);
+            $resp[$os][$device]['url'] = url('/#/'.$app->app_id);
             $resp[$os][$device]['file_url'] = $data['url'];
         }
 
