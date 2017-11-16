@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\MobileApp;
 use App\MobileAppFile;
+use App\Service\CloudFront;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -13,11 +14,13 @@ class AppFileController extends Controller
     private $appId;
     private $mobileApp;
     private $disk;
-    public function __construct(Request $request)
+    private $cloudFront;
+    public function __construct(Request $request, CloudFront $cloudFront)
     {
         $this->appId = $request->route()->parameter('appId');
         $this->mobileApp = MobileApp::where('app_id', $this->appId)->first();
         $this->disk = Storage::disk(config('disk.default'));
+        $this->cloudFront = $cloudFront;
         if (!$this->mobileApp)
             abort(404);
     }
@@ -84,8 +87,9 @@ class AppFileController extends Controller
             $mobileAppFile->original_name = $file->getClientOriginalName();
             $mobileAppFile->save();
         }
-
+        $fullFileName = '/apps/'.$this->mobileApp->app_id.'/'. $fileName;
         $file->storeAs('apps/'.$this->mobileApp->app_id.'/', $fileName, config('disk.default'));
+        $this->cloudFront->invalidate($fullFileName);
     }
 
     private function parseIAP($file, $plist)

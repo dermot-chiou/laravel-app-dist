@@ -16,7 +16,8 @@
         "pragmarx/firewall": "^2.1",
         "rodneyrehm/plist": "^2.0",
         "tufanbarisyildirim/php-apk-parser": "dev-master",
-        "league/flysystem-aws-s3-v3":  "~1.0"
+        "league/flysystem-aws-s3-v3":  "~1.0",
+        "aws/aws-sdk-php": "^3.0.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
