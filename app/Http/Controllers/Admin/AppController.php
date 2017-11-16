@@ -40,7 +40,8 @@ class AppController extends Controller
             return redirect()->action('Admin\AppController@index');
         $app->load('files');
         $url = $this->url->to('/#/'.$appId);
-        return view('admin.app.show', compact('app', 'url'));
+        $disk =  Storage::disk(config('disk.default'));
+        return view('admin.app.show', compact('app', 'url', 'disk'));
     }
 
     public function create()

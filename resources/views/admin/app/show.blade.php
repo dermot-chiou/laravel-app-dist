@@ -49,6 +49,47 @@
         </form>
         <a href="{{action('Admin\AppController@edit', [$app->app_id])}}" class="btn btn-success">編輯</a>
         <a href="{{action('Admin\AppFileController@create', [$app->app_id])}}" class="btn btn-primary">上傳檔案</a>
+
+    </div>
+</div>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        資源列表
+    </div>
+    <div class="panel-body">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>檔案名稱</th>
+                <th>CND 連結</th>
+                <th>Disk 連結</th>
+                <th>刪除</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach($app->resources as $resource)
+                <tr>
+                    <td>{{basename($resource->path)}}</td>
+                    <td><a href="{{cdn($resource->path)}}">CDN</a></td>
+                    <td><a href="{{$disk->url(ltrim($resource->path,'/'))}}">Disk</a></td>
+                    <td>
+                        <form style="display: inline-block;" action="{{action('Admin\AppResourceController@destroy', [$app->app_id, $resource->id])}}" method="POST">
+                            {{csrf_field()}}
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="submit" value="刪除" class="btn btn-danger">
+                        </form>
+                    </td>
+                </tr>
+
+
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-footer">
+        <a href="{{action('Admin\AppResourceController@create', [$app->app_id])}}" class="btn btn-primary">上傳資源</a>
     </div>
 </div>
 

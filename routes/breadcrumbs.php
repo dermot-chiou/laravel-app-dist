@@ -33,3 +33,9 @@ Breadcrumbs::register('file-upload', function ($breadcrumbs, $app) {
 });
 
 
+Breadcrumbs::register('resource-upload', function ($breadcrumbs, $app) {
+
+    $breadcrumbs->parent('app-show', $app);
+    $breadcrumbs->push('上傳資源', action('Admin\AppResourceController@create', [$app->app_id]));
+});
+

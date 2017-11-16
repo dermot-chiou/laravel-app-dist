@@ -50,4 +50,8 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/app/{appId}/create', 'AppFileController@create');
     Route::post('/app/{appId}/create', 'AppFileController@store');
     Route::delete('/app/{appId}/{file}', 'AppFileController@destroy');
+    Route::get('/app/{appId}/resource/create', 'AppResourceController@create');
+    Route::post('/app/{appId}/resource/create', 'AppResourceController@store');
+    Route::delete('/app/{appId}/resource/{resourceId}', 'AppResourceController@destroy');
+
 });

@@ -12,4 +12,9 @@ class MobileApp extends Model
     {
         return $this->hasMany('App\MobileAppFile', 'app_id', 'id');
     }
+
+    public function resources()
+    {
+        return $this->hasMany('App\AppResource', 'app_id', 'id');
+    }
 }

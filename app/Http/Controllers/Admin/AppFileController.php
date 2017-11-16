@@ -92,6 +92,7 @@ class AppFileController extends Controller
         $this->cloudFront->invalidate($fullFileName);
     }
 
+
     private function parseIAP($file, $plist)
     {
         $zip = \zip_open($file->getRealPath());
