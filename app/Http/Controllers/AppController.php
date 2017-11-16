@@ -73,8 +73,9 @@ class AppController extends Controller
     	$filename = $pathinfo['filename'];
 
     	return ['os' => 'Android',
-    	'device' => $this->device($filename), 
-    	'url' => $disk->url($file)];
+    	    'device' => $this->device($filename),
+    	    'url' => cdn($file, $disk->url($file))
+        ];
     }
 
     private function device($filename)
