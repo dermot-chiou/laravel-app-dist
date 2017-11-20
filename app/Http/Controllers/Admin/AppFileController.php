@@ -65,6 +65,7 @@ class AppFileController extends Controller
 
     private function saveFile($file, $data, $tablet)
     {
+        $mineType = $data['mine_type'];
         $extension = pathinfo($file->getClientOriginalName(), PATHINFO_EXTENSION);
         $fileName = $this->mobileApp->app_id.'-'.($tablet ? 'tablet' : 'mobile').'.'.$extension;
 
@@ -88,7 +89,13 @@ class AppFileController extends Controller
             $mobileAppFile->save();
         }
         $fullFileName = '/apps/'.$this->mobileApp->app_id.'/'. $fileName;
-        $file->storeAs('apps/'.$this->mobileApp->app_id.'/', $fileName, config('disk.default'));
+        $options  = [
+            'disk' => config('disk.default'),
+            //'visibility' => 'public',
+            'ContentType' => $mineType,
+        ];
+
+        $file->storeAs('apps/'.$this->mobileApp->app_id.'/', $fileName, $options);
         $this->cloudFront->invalidate($fullFileName);
     }
 
@@ -112,7 +119,8 @@ class AppFileController extends Controller
 
                         return [
                             'app_id' => $plist['CFBundleIdentifier'],
-                            'version' => $plist['CFBundleShortVersionString']
+                            'version' => $plist['CFBundleShortVersionString'],
+                            'mine_type' => 'application/octet-stream',
                         ];
                     }
                 }
@@ -129,7 +137,8 @@ class AppFileController extends Controller
         $manifest = $apk->getManifest();
         return [
             'app_id' => $manifest->getPackageName(),
-            'version' => $manifest->getVersionName()
+            'version' => $manifest->getVersionName(),
+            'mine_type' => 'application/vnd.android.package-archive',
         ];
     }
 }

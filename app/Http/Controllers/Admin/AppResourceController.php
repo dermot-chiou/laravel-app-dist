@@ -42,6 +42,12 @@ class AppResourceController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * 刪除資源檔
+     * @param $appId
+     * @param $resourceId
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy($appId, $resourceId)
     {
         $resource = AppResource::find($resourceId);
