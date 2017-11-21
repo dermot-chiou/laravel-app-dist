@@ -5,6 +5,8 @@
 <h3>{{$app->name}}</h3>
 <p>下載連結</p>
 <p><a href="{{$url}}">{{$url}}</a></p>
+<p>版本檢查 API</p>
+<p><a href="{{action('AppController@version', [$app->app_id])}}">{{action('AppController@version', [$app->app_id])}}</a></p>
 <div class="panel panel-default">
     <div class="panel-heading" style="background-color: #F5F5F5;">
         檔案列表
@@ -65,6 +67,8 @@
                 <th>檔案名稱</th>
                 <th>CND 連結</th>
                 <th>Disk 連結</th>
+                <th>MD5 Hash</th>
+                <th>sha1 Hash</th>
                 <th>刪除</th>
             </tr>
             </thead>
@@ -74,6 +78,8 @@
                     <td>{{basename($resource->path)}}</td>
                     <td><a href="{{cdn($resource->path)}}">CDN</a></td>
                     <td><a href="{{$disk->url(ltrim($resource->path,'/'))}}">Disk</a></td>
+                    <td>{{$resource->md5}}</td>
+                    <td>{{$resource->sha1}}</td>
                     <td>
                         <form style="display: inline-block;" action="{{action('Admin\AppResourceController@destroy', [$app->app_id, $resource->id])}}" method="POST">
                             {{csrf_field()}}

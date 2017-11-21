@@ -104,6 +104,18 @@ class AppController extends Controller
             $resp[$os][$device]['file_url'] = $data['url'];
         }
 
+
+        $resp['assets'] = [];
+        foreach ($app->resources as $resource)
+        {
+
+            $resource = $resource->toArray();
+            $resource['url'] = cdn($resource['path'], $this->disk->url($resource['path']));
+            $resource['file'] = basename($resource['path']);
+            unset($resource['path']);
+            $resp['assets'][] = $resource;
+        }
+
         return $resp;
 
 

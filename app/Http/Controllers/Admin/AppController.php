@@ -27,7 +27,6 @@ class AppController extends Controller
         foreach ($apps as $app)
         {
             $app->url =  $this->url->to('/#/'.$app->app_id);
-
         }
 
         return view('admin.app.index', compact('apps'));
@@ -38,9 +37,20 @@ class AppController extends Controller
         $app = MobileApp::where('app_id', $appId)->first();
         if(!$app)
             return redirect()->action('Admin\AppController@index');
-        $app->load('files');
-        $url = $this->url->to('/#/'.$appId);
+        $app->load(['files', 'resources']);
         $disk =  Storage::disk(config('disk.default'));
+        foreach ($app->resources as $resource)
+        {
+            if (!$resource->md5)
+                $resource->md5 = md5_file($disk->url(ltrim($resource->path, '/')));
+
+            if (!$resource->sha1)
+                $resource->sha1 = sha1_file($disk->url(ltrim($resource->path, '/')));
+
+            $resource->save();
+        }
+        $url = $this->url->to('/#/'.$appId);
+
         return view('admin.app.show', compact('app', 'url', 'disk'));
     }
 

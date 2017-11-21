@@ -37,7 +37,12 @@ class AppResourceController extends Controller
         $file->storeAs($path, $file->getClientOriginalName(), config('disk.default'));
         $this->cloudFront->invalidate($path.$file->getClientOriginalName());
 
-        AppResource::create(['app_id' => $this->mobileApp->id, 'path' => $path.$file->getClientOriginalName()]);
+        AppResource::create([
+            'app_id' => $this->mobileApp->id,
+            'path' => $path.$file->getClientOriginalName(),
+            'md5' => md5_file($file->getRealPath()),
+            'sha1' => sha1_file($file->getRealPath())
+        ]);
 
         return redirect()->back();
     }
