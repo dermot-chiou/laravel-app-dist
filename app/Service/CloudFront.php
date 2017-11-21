@@ -17,6 +17,8 @@ class CloudFront
     private $distributionId;
     public function __construct()
     {
+        if (config('disk.default') != 's3')
+            return;
         $this->client = new CloudFrontClient([
             'version'     => 'latest',
             'region'      => env('AWS_REGION'),
@@ -31,6 +33,8 @@ class CloudFront
 
     public function invalidate($items)
     {
+        if (config('disk.default') != 's3')
+            return;
         if (!is_array($items))
             $items = array($items);
         return $this->client->createInvalidation([
