@@ -116,6 +116,8 @@ class AppController extends Controller
             $resp['assets'][] = $resource;
         }
 
+        $resp['manifest'] = json_decode($app->manifest, true);
+
         return $resp;
 
 
