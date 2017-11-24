@@ -109,6 +109,39 @@ class AppController extends Controller
         return redirect()->action('Admin\AppController@edit', [$appId]);
     }
 
+    public function manifest($appId, Request $request)
+    {
+        $validator = \Validator::make($request->all(), [
+            'manifest' => 'required',
+        ]);
+
+        $validator->after(function ($validator) use($request) {
+            if (!$this->isJson($request->get('manifest'))){
+                $validator->errors()->add('manifest', 'Invalid format of manifest');
+            }
+        });
+
+        if ($validator->fails())
+        {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        $app = MobileApp::where('app_id', $appId)->first();
+        if(!$app)
+            abort(404);
+        $app->manifest = $request->get('manifest');
+        $app->save();
+        return redirect()->back();
+    }
+
+    private function isJson($str)
+    {
+        json_decode($str);
+        return json_last_error() == JSON_ERROR_NONE;
+    }
+
     public function destroy($appId)
     {
         $mobileApp = MobileApp::where('app_id', $appId)->first();

@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => ['aut
     Route::get('/app', 'AppController@index');
     Route::get('/app/{appId}/edit', 'AppController@edit');
     Route::put('/app/{appId}/edit', 'AppController@update');
+    Route::put('/app/{appId}/manifest', 'AppController@manifest');
     Route::get('/app/create', 'AppController@create');
     Route::post('/app/create', 'AppController@store');
     Route::get('/app/{appId}', 'AppController@show');

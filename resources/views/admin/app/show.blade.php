@@ -55,6 +55,31 @@
     </div>
 </div>
 
+<div class="panel panel-success">
+    <div class="panel-heading">
+        Manifest
+    </div>
+    <form action="{{action('Admin\AppController@manifest', [$app->app_id])}}" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        {{ csrf_field() }}
+        <div class="panel-body">
+            @if ($errors->has('manifest'))
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->get('manifest') as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            <textarea name="manifest" id="manifest" cols="30" rows="10" class="form-control textbox" placeholder="請輸入JSON字串">{{(old('manifest') !== null) ? old('manifest') : $app->manifest}}</textarea>
+        </div>
+        <div class="panel-footer">
+            <input type="submit" class="btn btn-primary">
+        </div>
+    </form>
+</div>
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         資源列表
@@ -99,5 +124,37 @@
     </div>
 </div>
 
+    <script>
+        $(document).delegate('.textbox', 'keydown', function(e) {
+            var keyCode = e.keyCode || e.which;
+
+            if (keyCode == 9) {
+                e.preventDefault();
+                var start = this.selectionStart;
+                var end = this.selectionEnd;
+
+                // set textarea value to: text before caret + tab + text after caret
+                $(this).val($(this).val().substring(0, start)
+                        + "\t"
+                        + $(this).val().substring(end));
+
+                // put caret at right position again
+                this.selectionStart =
+                        this.selectionEnd = start + 1;
+            }
+        });
+        
+        $('.textbox').change(function (e) {
+            try {
+                var $this = $(this);
+                var $val = JSON.parse($this.val());
+                $this.val(JSON.stringify($val, undefined, 4));
+            }
+            catch (err)
+            {
+                alert(err.message);
+            }
+        });
+    </script>
 
 @endsection
