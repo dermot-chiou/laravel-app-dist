@@ -7,17 +7,18 @@
     "require": {
         "php": ">=7.0.0",
         "andreasindal/laravel-markdown": "^2.0",
+        "aws/aws-sdk-php": "^3.0.0",
         "davejamesmiller/laravel-breadcrumbs": "^4.2",
+        "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
         "geoip2/geoip2": "~2.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "league/flysystem-aws-s3-v3": "~1.0",
         "nathanmac/Parser": "^4.3",
         "pragmarx/firewall": "^2.1",
         "rodneyrehm/plist": "^2.0",
-        "tufanbarisyildirim/php-apk-parser": "dev-master",
-        "league/flysystem-aws-s3-v3":  "~1.0",
-        "aws/aws-sdk-php": "^3.0.0"
+        "tufanbarisyildirim/php-apk-parser": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
