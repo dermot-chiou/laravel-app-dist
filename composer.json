@@ -9,7 +9,7 @@
         "andreasindal/laravel-markdown": "^2.0",
         "aws/aws-sdk-php": "^3.0.0",
         "davejamesmiller/laravel-breadcrumbs": "^4.2",
-        "doctrine/dbal": "^2.6",
+        "doctrine/dbal": "~2.5",
         "fideloper/proxy": "~3.3",
         "geoip2/geoip2": "~2.0",
         "laravel/framework": "5.5.*",
