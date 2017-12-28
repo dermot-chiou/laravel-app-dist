@@ -101,7 +101,7 @@
             @foreach($app->resources as $resource)
                 <tr>
                     <td>{{basename($resource->path)}}</td>
-                    <td><a href="{{cdn($resource->path)}}">CDN</a></td>
+                    <td><a href="{{cdn($resource->path, $disk->url(ltrim($resource->path,'/'))}}">CDN</a></td>
                     <td><a href="{{$disk->url(ltrim($resource->path,'/'))}}">Disk</a></td>
                     <td>{{$resource->md5}}</td>
                     <td>{{$resource->sha1}}</td>
