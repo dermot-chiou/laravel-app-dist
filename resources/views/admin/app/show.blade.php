@@ -77,7 +77,7 @@
         <div class="panel-footer">
             <input type="submit" class="btn btn-primary">
         </div>
-    </form>
+    </form
 </div>
 
 <div class="panel panel-primary">

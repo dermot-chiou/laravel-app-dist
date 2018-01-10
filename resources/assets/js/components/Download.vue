@@ -1,9 +1,9 @@
 <template>
     <div>
         <h4>{{app.name}}</h4>
-        <p>支援裝置</p>
+        <p>{{$t('pharaoh.supportedDevice')}}</p>
         <p>
-            <span v-for="os in osList" class="label label-success">{{os}}</span> &nbsp;
+            <span v-for="os in osList" class="label label-success">{{$t('pharaoh.' + os)}}</span> &nbsp;
         </p>
         <qriously :value="href" :size="200" class="qrcode img-thumbnail"></qriously>
 
@@ -13,15 +13,15 @@
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="">不支援</h5>
+                    <h5 class="modal-title" id="">{{$t('pharaoh.unspported')}}</h5>
                 </div>
                 <div class="modal-body">
                     <h6>
-                        你的裝置不支援，請用手機掃描QR Code下載
+                        {{$t('pharaoh.unspportedDescription')}}
                     </h6>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-warning" data-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal">{{$t('pharaoh.close')}}</button>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
         mounted() {
             this.$http.get('/apps/' + this.$route.params.appId).then(response => {
                 this.app = response.body;
-                window.document.title = "法老王 APP " + this.app.name
+                window.document.title = "PHARAOH APP " + this.app.name
                 var url = {};
                 var that = this;
                 this.app.files.map(function(v, k)
