@@ -6,7 +6,7 @@ Vue.use(VueI18n);
 const messages = {
     'en-US': {
         pharaoh: {
-            app_download: 'Pharaoh Apps Download',
+            app_download: 'APP DOWNLOAD',
             warrior: 'Warrior',
             golden_cat: 'Golden Cat',
             pharaoh_poker: 'Pharaoh Poker',
@@ -18,7 +18,7 @@ const messages = {
     },
     'en' : {
         pharaoh: {
-            app_download: 'PHARAOH',
+            app_download: 'APP DOWNLOAD',
             warrior: 'Warrior',
             golden_cat: 'Golden Cat',
             pharaoh_poker: 'Pharaoh Poker',
@@ -36,7 +36,7 @@ const messages = {
     },
     'zh-TW' : {
         pharaoh: {
-            app_download: 'PHARAOH',
+            app_download: '手機下載',
             warrior: '武士道',
             golden_cat: '金錢貓',
             pharaoh_poker: '法老撲克',
@@ -54,7 +54,7 @@ const messages = {
     },
     'zh-CN' :{
         pharaoh: {
-            app_download: 'PHARAOH',
+            app_download: '手機下載',
             warrior: '武士道',
             golden_cat: '金钱猫',
             pharaoh_poker: '法老扑克',
@@ -72,7 +72,7 @@ const messages = {
     },
     'zh' :{
         pharaoh: {
-            app_download: 'PHARAOH',
+            app_download: '手机下载',
             warrior: '武士道',
             golden_cat: '金钱猫',
             pharaoh_poker: '法老扑克',

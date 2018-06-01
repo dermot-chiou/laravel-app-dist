@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="container">
-    <img src="/images/logo.png">
+    <!--<img src="/images/logo.png">-->
     <h1>{{ $t('pharaoh.app_download') }}</h1>
     <router-view></router-view>
   </div>
@@ -16,11 +16,11 @@ export default {
   body{
     text-align: center;
     background-color: #232323;
-    color: #a4a4a4; 
+    color: #a4a4a4;
   }
 
   #app{
-    margin-top: 0px;
+    margin-top: 60px;
   }
 
   ul{

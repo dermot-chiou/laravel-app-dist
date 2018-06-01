@@ -8,13 +8,13 @@
 
         <title>PHARAOH APP</title>
         
-        <link rel="stylesheet" href="{{asset('css/app.css').'?v=1.0.3'}}">
+        <link rel="stylesheet" href="{{asset('css/app.css').'?v=1.0.4'}}">
 
     </head>
     <body>
         <div id="app">
             
         </div>
-        <script type="text/javascript" src="{{asset('js/app.js').'?v=1.0.3'}}"></script>
+        <script type="text/javascript" src="{{asset('js/app.js').'?v=1.0.4'}}"></script>
     </body>
 </html>
