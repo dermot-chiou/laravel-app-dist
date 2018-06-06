@@ -113,13 +113,13 @@ class AppFileController extends Controller
 
                         $buf =\ zip_entry_read($zip_entry, \zip_entry_filesize($zip_entry));
                         $plist->parse($buf);
-                        $plist = $plist->toArray();
-
+                        $plistArray = $plist->toArray();
+                        if (!isset($plistArray['CFBundleIdentifier']))
+                            continue;
                         \zip_entry_close($zip_entry);
-
                         return [
-                            'app_id' => $plist['CFBundleIdentifier'],
-                            'version' => $plist['CFBundleShortVersionString'],
+                            'app_id' => $plistArray['CFBundleIdentifier'],
+                            'version' => $plistArray['CFBundleShortVersionString'],
                             'mine_type' => 'application/octet-stream',
                         ];
                     }
